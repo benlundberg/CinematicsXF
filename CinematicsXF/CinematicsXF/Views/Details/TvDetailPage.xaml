@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="CinematicsXF.TvDetailPage"
+             xmlns:local="clr-namespace:CinematicsXF"
+             xmlns:controls="clr-namespace:CinematicsXF.Controls"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             Visual="Material"
+             x:DataType="local:TvDetailViewModel">
+
+    <NavigationPage.TitleView>
+        <controls:PageTitleView Text="{Binding Tv.Title}" />
+    </NavigationPage.TitleView>
+
+    <controls:NotifyScrollView>
+        <controls:NotifyScrollView.HeaderContent>
+            <Grid 
+                Padding="10"
+                ColumnSpacing="{StaticResource MainSpacing}"
+                BackgroundColor="{StaticResource PrimaryColor}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <ff:CachedImage 
+                    HeightRequest="100"
+                    WidthRequest="100"
+                    VerticalOptions="Start"
+                    Source="{Binding Tv.Poster185}" 
+                    Aspect="AspectFill" />
+                <StackLayout 
+                    Grid.Column="1"
+                    Spacing="6"
+                    VerticalOptions="Start">
+                    <Label 
+                        Text="{Binding Tv.Title}"
+                        TextColor="{StaticResource SecondaryTextColor}"
+                        FontSize="Large" />
+                    <Label 
+                        Text="{Binding Tv.Overview}"
+                        MaxLines="1"
+                        LineBreakMode="TailTruncation"
+                        TextColor="{StaticResource SecondaryTextColor}"
+                        FontSize="Medium" />
+                    <BoxView 
+                        HeightRequest="3"
+                        WidthRequest="100"
+                        HorizontalOptions="Start"
+                        Color="White" />
+                </StackLayout>
+            </Grid>
+        </controls:NotifyScrollView.HeaderContent>
+        <controls:NotifyScrollView.MainContent>
+            <StackLayout>
+                <Grid Padding="10" ColumnSpacing="{StaticResource MainSpacing}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <ff:CachedImage 
+                        HeightRequest="100"
+                        WidthRequest="100"
+                        VerticalOptions="Start"
+                        Source="{Binding Tv.Poster185}"
+                        Aspect="AspectFill" />
+                    <StackLayout 
+                        Grid.Column="1"
+                        Spacing="6"
+                        VerticalOptions="Start">
+                        <Label 
+                            Text="{Binding Tv.Title}"
+                            FontSize="Large" />
+                        <Label 
+                            Text="{Binding Tv.Overview}"
+                            MaxLines="1"
+                            LineBreakMode="TailTruncation" />
+                        <controls:RatingControl 
+                            IsLocked="True"
+                            Rating="{Binding Tv.InternalRating}" />
+                    </StackLayout>
+                </Grid>
+                <Grid 
+                    Grid.Row="1" 
+                    ColumnSpacing="{StaticResource MainSpacing}"
+                    Padding="{StaticResource ControlPadding}"
+                    BackgroundColor="{StaticResource Gray}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Label 
+                        FontSize="Default"
+                        FontAttributes="Bold"
+                        Text="{Binding Tv.ReleaseDate}" />
+                    <Label 
+                        Grid.Column="2"
+                        VerticalOptions="Center"
+                        FontFamily="{StaticResource FontAwesomeSolid}"
+                        TextColor="{StaticResource PrimaryColor}"
+                        Text="&#xf0c0;" />
+                    <Label 
+                        Grid.Column="3"
+                        VerticalOptions="Center"
+                        FontSize="Small"
+                        TextColor="{StaticResource PrimaryColor}"
+                        Text="{Binding Tv.NumberOfSeasons}" />
+                    <Label 
+                        Grid.Column="4"
+                        VerticalOptions="Center"
+                        FontFamily="{StaticResource FontAwesomeSolid}"
+                        TextColor="{StaticResource PrimaryColor}"
+                        Text="&#xf004;" />
+                    <Label 
+                        Grid.Column="5"
+                        VerticalOptions="Center"
+                        FontSize="Small"
+                        TextColor="{StaticResource PrimaryColor}"
+                        Text="{Binding Tv.VoteAverage}" />
+                </Grid>
+                <Label 
+                    FontSize="Default"
+                    Padding="{StaticResource MainPadding}"
+                    Text="{Binding Tv.Overview}" />
+                <Label 
+                    FontSize="Default"
+                    FontAttributes="Bold"
+                    Text="COMMENTS"
+                    Padding="{StaticResource ControlPadding}"
+                    BackgroundColor="{StaticResource Gray}" />
+            </StackLayout>
+        </controls:NotifyScrollView.MainContent>
+    </controls:NotifyScrollView>
+</ContentPage>

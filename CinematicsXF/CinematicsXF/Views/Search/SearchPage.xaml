@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="CinematicsXF.SearchPage"
+             xmlns:local="clr-namespace:CinematicsXF"
+             xmlns:controls="clr-namespace:CinematicsXF.Controls"
+             xmlns:core="clr-namespace:CinematicsXF.Core;assembly=CinematicsXF.Core"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:transformation="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+             Visual="Material">
+
+    <ContentPage.IconImageSource>
+        <FontImageSource 
+            Glyph="{StaticResource SearchIcon}"
+			Color="{StaticResource ToolbarTextColor}"
+			FontFamily="{StaticResource FontAwesomeSolid}"/>
+    </ContentPage.IconImageSource>
+
+    <NavigationPage.TitleView>
+        <controls:PageTitleView Text="Search" />
+    </NavigationPage.TitleView>
+
+    <Grid Padding="{StaticResource MainPadding}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <controls:SearchEntry 
+            Placeholder="{local:Translate Gen_Search}"
+            Text="{Binding Query, Mode=TwoWay}"
+            SearchCommand="{Binding SearchCommand}" />
+        <ScrollView Grid.Row="1" IsVisible="{Binding IsBusy, Converter={StaticResource InvertedBoolConv}}">
+            <StackLayout>
+                <!-- Movies -->
+                <controls:GridViewControl 
+                    NumberOfColumns="3"
+                    ItemsSource="{Binding Movies}"
+                    ItemClickCommand="{Binding MovieClickCommand}"
+                    ItemTemplate="{StaticResource MediaNoTitleTemplate}" />
+                <!-- More movies button -->
+                <Button 
+                    IsVisible="{Binding HasMoreMovies}"
+                    Command="{Binding MoreMoviesClickCommand}"
+                    Text="{local:Translate Gen_More}" />
+                <!-- Persons -->
+                <controls:HorizontalView
+                    ItemsSource="{Binding Persons}"
+                    ItemClickCommand="{Binding PersonClickCommand}"
+                    ItemTemplate="{StaticResource PersonRoundTemplate}" />
+            </StackLayout>
+        </ScrollView>
+        <controls:LoadingView Grid.Row="1" IsRunning="{Binding IsBusy}" />
+    </Grid>
+</ContentPage>

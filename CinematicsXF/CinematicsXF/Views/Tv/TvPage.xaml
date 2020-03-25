@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="CinematicsXF.TvPage"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:controls="clr-namespace:CinematicsXF.Controls"
+             xmlns:core="clr-namespace:CinematicsXF.Core;assembly=CinematicsXF.Core"
+             xmlns:local="clr-namespace:CinematicsXF"
+             x:DataType="local:TvViewModel"
+             x:Name="tvRoot"
+             Title="{local:Translate Gen_Tv}">
+
+    <ContentPage.IconImageSource>
+        <FontImageSource 
+            Glyph="{StaticResource TvIcon}"
+			Color="{StaticResource ToolbarTextColor}"
+			FontFamily="{StaticResource FontAwesomeSolid}"/>
+    </ContentPage.IconImageSource>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <DataTemplate x:Key="tvItem" x:DataType="core:TvItem">
+                <Frame 
+                    WidthRequest="150"
+                    HeightRequest="175" 
+                    Padding="1">
+                    <Grid>
+                        <ff:CachedImage
+                            Source="{Binding Poster185}" 
+                            WidthRequest="150"
+                            HeightRequest="175"
+                            Aspect="AspectFill" />
+                        <Grid VerticalOptions="End">
+                            <Grid BackgroundColor="{StaticResource PrimaryColor}" Opacity=".7" />
+                            <StackLayout
+                                Spacing="0"
+                                Padding="16, 8">
+                                <Label
+                                    MaxLines="1"
+                                    LineBreakMode="TailTruncation"
+                                    FontAttributes="Bold"
+                                    FontSize="Small"
+                                    TextColor="{StaticResource SecondaryTextColor}"
+                                    Text="{Binding Title}" />
+                            </StackLayout>
+                        </Grid>
+                    </Grid>
+                </Frame>
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <Grid>
+            <StackLayout IsVisible="{Binding IsNotBusy}">
+                <CarouselView
+                    ItemsSource="{Binding PopuplarTvFirst}" 
+                    IndicatorView="indicatorViewTv"
+                    HeightRequest="300">
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate x:DataType="core:TvItem">
+                            <Grid>
+                                <ff:CachedImage Source="{Binding Poster632}" Aspect="AspectFill" />
+                                <Grid 
+                                    RowSpacing="0"
+                                    VerticalOptions="Center"
+                                    HorizontalOptions="Start">
+                                    <Grid BackgroundColor="{StaticResource PrimaryColor}" Opacity="0.7" />
+                                    <StackLayout 
+                                        Spacing="0"
+                                        Padding="40, 16"
+                                        VerticalOptions="Center">
+                                        <Label
+                                            FontSize="Medium"
+                                            FontAttributes="Bold"
+                                            TextColor="{StaticResource SecondaryTextColor}"
+                                            Text="{Binding Title}" />
+                                    </StackLayout>
+                                </Grid>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding BindingContext.ItemClickedCommand, Source={x:Reference tvRoot}}" CommandParameter="{Binding}" />
+                                </Grid.GestureRecognizers>
+                            </Grid>
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+                </CarouselView>
+                <IndicatorView
+                    x:Name="indicatorViewTv"
+                    IndicatorsShape="Circle"
+                    IndicatorColor="LightGray"
+                    SelectedIndicatorColor="{StaticResource PrimaryColor}"
+                    HorizontalOptions="Center"
+                    IndicatorSize="8" />
+                <Label 
+                    FontSize="Medium"
+                    Padding="{StaticResource HorizontalPadding}"
+                    Text="{local:Translate Gen_Popular}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer />
+                    </Label.GestureRecognizers>
+                </Label>
+                <CollectionView
+                    ItemsSource="{Binding PopuplarTvLast}"
+                    SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                    ItemTemplate="{StaticResource tvItem}"
+                    Margin="{StaticResource MainPadding}"
+                    SelectionMode="Single"
+                    HeightRequest="200">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout
+                            SnapPointsAlignment="Start" 
+                            SnapPointsType="None" 
+                            HorizontalItemSpacing="10" 
+                            Orientation="Horizontal" />
+                    </CollectionView.ItemsLayout>
+                </CollectionView>
+                <Label 
+                    FontSize="Medium"
+                    Padding="{StaticResource HorizontalPadding}"
+                    Text="{local:Translate Gen_On_Air}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer />
+                    </Label.GestureRecognizers>
+                </Label>
+                <CollectionView
+                    ItemsSource="{Binding OnAirTv}"
+                    SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                    ItemTemplate="{StaticResource tvItem}"
+                    Margin="{StaticResource MainPadding}"
+                    SelectionMode="Single"
+                    HeightRequest="200">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout
+                            SnapPointsAlignment="Start" 
+                            SnapPointsType="None" 
+                            HorizontalItemSpacing="10" 
+                            Orientation="Horizontal" />
+                    </CollectionView.ItemsLayout>
+                </CollectionView>
+                <Label 
+                    FontSize="Medium"
+                    Padding="{StaticResource HorizontalPadding}"
+                    Text="{local:Translate Gen_Top_Rated}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer />
+                    </Label.GestureRecognizers>
+                </Label>
+                <CollectionView
+                    ItemsSource="{Binding TopRatedTv}"
+                    SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                    ItemTemplate="{StaticResource tvItem}"
+                    Margin="{StaticResource MainPadding}"
+                    SelectionMode="Single"
+                    HeightRequest="200">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout
+                            SnapPointsAlignment="Start" 
+                            SnapPointsType="None" 
+                            HorizontalItemSpacing="10" 
+                            Orientation="Horizontal" />
+                    </CollectionView.ItemsLayout>
+                </CollectionView>
+            </StackLayout>
+            <controls:LoadingView IsRunning="{Binding IsBusy}" />
+        </Grid>
+    </ScrollView>
+</ContentPage>

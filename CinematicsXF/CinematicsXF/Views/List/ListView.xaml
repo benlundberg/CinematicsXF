@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="CinematicsXF.ListView"
+             xmlns:controls="clr-namespace:CinematicsXF.Controls"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:core="clr-namespace:CinematicsXF.Core;assembly=CinematicsXF.Core">
+
+    <Grid Padding="{StaticResource MainPadding}">
+
+        <!-- Grid Layout -->
+        <ScrollView IsVisible="{Binding IsListLayout, Converter={StaticResource InvertedBoolConv}}">
+            <controls:GridViewControl
+                NumberOfColumns="3"
+                ItemsSource="{Binding MovieItems}"
+                ItemClickCommand="{Binding MovieClickCommand}">
+                <controls:GridViewControl.ItemTemplate>
+                    <DataTemplate x:DataType="core:MovieItem">
+                        <ff:CachedImage Source="{Binding Poster300}" Aspect="AspectFit" />
+                    </DataTemplate>
+                </controls:GridViewControl.ItemTemplate>
+            </controls:GridViewControl>
+        </ScrollView>
+
+        <!-- List -->
+        <ListView 
+            IsVisible="{Binding IsListLayout}"
+			CachingStrategy="RecycleElement"
+			ItemsSource="{Binding MovieItems}"
+            SelectedItem="{Binding SelectedMovie, Mode=TwoWay}"
+			HasUnevenRows="True"
+			SeparatorVisibility="None">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="core:MovieItem">
+                    <ViewCell>
+                        <Frame 
+                            Padding="1"
+                            Margin="0, 8">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="2*" />
+                                </Grid.ColumnDefinitions>
+                                <ff:CachedImage
+                                    WidthRequest="100"
+                                    HeightRequest="125"
+                                    Source="{Binding Poster300}" 
+                                    Aspect="AspectFill" />
+                                <StackLayout
+                                    Grid.Column="1"
+                                    VerticalOptions="Center"
+                                    Padding="10">
+                                    <Label 
+                                        FontSize="Medium"
+                                        Text="{Binding Title}" />
+                                    <Label 
+                                        FontSize="Default"
+                                        MaxLines="3"
+                                        LineBreakMode="TailTruncation"
+                                        Text="{Binding Overview}" />
+                                    <Label>
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span 
+                                                    FontSize="Default"
+                                                    TextColor="{StaticResource PrimaryColor}" 
+                                                    Text="&#xf005;" 
+                                                    FontFamily="{StaticResource FontAwesomeSolid}" />
+                                                <Span Text=" " />
+                                                <Span Text="{Binding VoteAverage}" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                </StackLayout>
+                            </Grid>
+                        </Frame>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+    </Grid>
+
+</ContentView>

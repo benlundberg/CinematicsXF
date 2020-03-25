@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="CinematicsXF.ListPage"
+             xmlns:controls="clr-namespace:CinematicsXF.Controls"
+             xmlns:local="clr-namespace:CinematicsXF"
+             Visual="Material"
+             x:DataType="local:ListViewModel">
+
+    <NavigationPage.TitleView>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <controls:PageTitleView Text="{Binding Title}" />
+            <Label 
+                Grid.Column="1"
+                FontSize="{StaticResource ToolbarItemSize}"
+                VerticalOptions="Center"
+                Margin="0, 0, 24, 0"
+                Text="{StaticResource GridIcon}"
+                TextColor="{StaticResource ToolbarTextColor}"
+                FontFamily="{StaticResource FontAwesomeSolid}">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ChangeLayoutClickCommand}" />
+                </Label.GestureRecognizers>
+                <Label.Triggers>
+                    <DataTrigger TargetType="Label" Binding="{Binding IsListLayout}" Value="False">
+                        <Setter Property="Text" Value="{StaticResource GridIcon}" />
+                    </DataTrigger>
+                    <DataTrigger TargetType="Label" Binding="{Binding IsListLayout}" Value="True">
+                        <Setter Property="Text" Value="{StaticResource ListIcon}" />
+                    </DataTrigger>
+                </Label.Triggers>
+            </Label>
+        </Grid>
+    </NavigationPage.TitleView>
+
+    <local:ListView />
+
+</ContentPage>

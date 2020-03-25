@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="CinematicsXF.MovieDetailPage"
+             xmlns:controls="clr-namespace:CinematicsXF.Controls"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:local="clr-namespace:CinematicsXF"
+             Visual="Material"
+             x:DataType="local:MovieDetailViewModel">
+
+    <NavigationPage.TitleView>
+        <controls:PageTitleView Text="{Binding Movie.Title}" />
+    </NavigationPage.TitleView>
+
+    <controls:CollapsingScrollView>
+        <controls:CollapsingScrollView.HeaderContent>
+            <Grid>
+                <ff:CachedImage 
+                    HeightRequest="300"
+                    Source="{Binding Movie.Poster1280}" 
+                    Aspect="AspectFill" />
+                <Grid BackgroundColor="Black" Opacity=".5" />
+                <StackLayout 
+                    Spacing="6"
+                    Padding="{StaticResource MainPadding}"
+                    VerticalOptions="End">
+                    <ff:CachedImage 
+                        HorizontalOptions="Center"
+                        HeightRequest="200"
+                        WidthRequest="160"
+                        Source="{Binding Movie.Poster185}" 
+                        Aspect="AspectFill" />
+                    <Label 
+                        Text="{Binding Movie.Tagline}"
+                        TextColor="{StaticResource SecondaryTextColor}"
+                        FontSize="Large" />
+                    <Label 
+                        Text="{Binding Movie.Genres}"
+                        TextColor="{StaticResource SecondaryTextColor}"
+                        FontSize="Default" />
+                    <BoxView 
+                        HeightRequest="3"
+                        WidthRequest="100"
+                        HorizontalOptions="Start"
+                        Color="{StaticResource Accent}"/>
+                </StackLayout>
+                <Button
+                    VerticalOptions="End"
+                    HorizontalOptions="End"
+                    Margin="16"
+                    Command="{Binding FavouriteCommand}"
+                    Style="{StaticResource FloatingButton}"
+                    Text="{StaticResource FavouriteIcon}">
+                    <Button.Triggers>
+                        <DataTrigger 
+                            TargetType="Button"
+                            Value="True"
+                            Binding="{Binding Movie.IsFavourite}">
+                            <Setter Property="FontFamily" Value="{StaticResource FontAwesomeSolid}" />
+                        </DataTrigger>
+                        <DataTrigger 
+                            TargetType="Button"
+                            Value="False"
+                            Binding="{Binding Movie.IsFavourite}">
+                            <Setter Property="FontFamily" Value="{StaticResource FontAwesomeRegular}" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+            </Grid>
+        </controls:CollapsingScrollView.HeaderContent>
+        <controls:CollapsingScrollView.MainContent>
+            <StackLayout>
+                <Grid 
+                    Grid.Row="1" 
+                    ColumnSpacing="{StaticResource MainSpacing}"
+                    Padding="{StaticResource MainPadding}"
+                    BackgroundColor="{StaticResource Gray}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Label 
+                        FontSize="Default"
+                        FontAttributes="Bold"
+                        Text="{Binding Movie.ReleaseDate}" />
+                    <Label 
+                        Grid.Column="2"
+                        VerticalOptions="Center"
+                        FontSize="Medium"
+                        FontFamily="{StaticResource FontAwesomeSolid}"
+                        TextColor="{StaticResource PrimaryColor}"
+                        Text="&#xf2f2;" />
+                    <Label 
+                        Grid.Column="3"
+                        VerticalOptions="Center"
+                        FontSize="Small"
+                        TextColor="{StaticResource PrimaryColor}"
+                        Text="{Binding Movie.Runtime}" />
+                    <Label 
+                        Grid.Column="4"
+                        VerticalOptions="Center"
+                        FontSize="Medium"
+                        FontFamily="{StaticResource FontAwesomeSolid}"
+                        TextColor="{StaticResource PrimaryColor}"
+                        Text="&#xf004;" />
+                    <Label 
+                        Grid.Column="5"
+                        VerticalOptions="Center"
+                        FontSize="Small"
+                        TextColor="{StaticResource PrimaryColor}"
+                        Text="{Binding Movie.VoteAverage}" />
+                </Grid>
+                <Label 
+                    Padding="{StaticResource MainPadding}"
+                    FontSize="Default"
+                    Text="{Binding Movie.Overview}" />
+                <Label 
+                    Text="{local:Translate Gen_Cast_And_Crew}"
+                    FontSize="Default"
+                    FontAttributes="Bold"
+                    Padding="{StaticResource ControlPadding}"
+                    BackgroundColor="{StaticResource Gray}" />
+                <controls:HorizontalView
+                    ItemsSource="{Binding Persons}"
+                    ItemClickCommand="{Binding PersonItemCommand}"
+                    Margin="{StaticResource MainPadding}"
+                    ItemTemplate="{StaticResource PersonCharacterRoundTemplate}" />
+                <Label 
+                    Text="{local:Translate Gen_Similar_Movies}"
+                    FontSize="Default"
+                    FontAttributes="Bold"
+                    Padding="{StaticResource ControlPadding}"
+                    BackgroundColor="{StaticResource Gray}" />
+                <controls:HorizontalView
+                    ItemsSource="{Binding SimilarMovies}"
+                    ItemClickCommand="{Binding MovieItemCommand}"
+                    Margin="{StaticResource MainPadding}"
+                    ItemTemplate="{StaticResource MediaNoTitleTemplate}" />
+            </StackLayout>
+        </controls:CollapsingScrollView.MainContent>
+    </controls:CollapsingScrollView>
+</ContentPage>

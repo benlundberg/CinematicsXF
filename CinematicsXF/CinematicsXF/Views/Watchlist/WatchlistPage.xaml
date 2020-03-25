@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="CinematicsXF.WatchlistPage"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:controls="clr-namespace:CinematicsXF.Controls"
+             xmlns:core="clr-namespace:CinematicsXF.Core;assembly=CinematicsXF.Core"
+             xmlns:local="clr-namespace:CinematicsXF"
+             Title="{local:Translate Gen_Watchlist}">
+
+
+    <ContentPage.IconImageSource>
+        <FontImageSource 
+            Glyph="{StaticResource FavouriteIcon}"
+			Color="{StaticResource ToolbarTextColor}"
+			FontFamily="{StaticResource FontAwesomeSolid}"/>
+    </ContentPage.IconImageSource>
+
+    <ListView
+        SelectedItem="{Binding SelectedMedia, Mode=TwoWay}"
+        ItemsSource="{Binding WatchlistItems}"
+        SeparatorVisibility="None"
+        HasUnevenRows="True">
+        <ListView.ItemTemplate>
+            <DataTemplate x:DataType="core:MovieItem">
+                <ViewCell>
+                    <Grid>
+                        <ff:CachedImage 
+                            HeightRequest="250"
+                            Aspect="AspectFill"
+                            Source="{Binding Poster632}" />
+                        <Grid BackgroundColor="Black" Opacity=".4" />
+                        <Grid 
+                            Margin="16, 10"
+                            RowSpacing="6"
+                            VerticalOptions="End">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Label
+                                FontSize="Large"
+                                TextColor="{StaticResource SecondaryTextColor}"
+                                Text="{Binding Title}" />
+                            <Grid Grid.Row="1" ColumnSpacing="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Label 
+                                    FontSize="Default"
+                                    TextColor="{StaticResource SecondaryTextColor}"
+                                    Text="{Binding Genres}" />
+                                <Label 
+                                    Grid.Column="2"
+                                    VerticalOptions="Center"
+                                    FontSize="Small"
+                                    FontFamily="{StaticResource FontAwesomeSolid}"
+                                    TextColor="{StaticResource Accent}"
+                                    Text="&#xf2f2;" />
+                                <Label 
+                                    Grid.Column="3"
+                                    VerticalOptions="Center"
+                                    FontAttributes="Bold"
+                                    FontSize="Small"
+                                    TextColor="{StaticResource Accent}"
+                                    Text="{Binding Runtime}" />
+                                <Label 
+                                    Grid.Column="4"
+                                    VerticalOptions="Center"
+                                    FontSize="Small"
+                                    FontFamily="{StaticResource FontAwesomeSolid}"
+                                    TextColor="{StaticResource Accent}"
+                                    Text="&#xf004;" />
+                                <Label 
+                                    Grid.Column="5"
+                                    VerticalOptions="Center"
+                                    FontAttributes="Bold"
+                                    FontSize="Small"
+                                    TextColor="{StaticResource Accent}"
+                                    Text="{Binding VoteAverage}" />
+                            </Grid>
+                            <BoxView 
+                                Grid.Row="2"
+                                HeightRequest="3"
+                                WidthRequest="50"
+                                HorizontalOptions="Start"
+                                Color="{StaticResource Accent}"/>
+                        </Grid>
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+</ContentPage>
